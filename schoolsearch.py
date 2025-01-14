@@ -86,7 +86,7 @@ def add_data(main_data, md_idx, student_info, by_st_last, by_t_last, by_bus, by_
                 by_grade[int(data)] = [md_idx]
 
         if i == 3:
-            main_data[md_idx]["Classroom"] = data
+            main_data[md_idx]["Classroom"] = int(data)
 
         if i == 4:
             main_data[md_idx]["Bus"] = int(data)
@@ -96,7 +96,7 @@ def add_data(main_data, md_idx, student_info, by_st_last, by_t_last, by_bus, by_
                 by_bus[int(data)] = [md_idx]
 
         if i == 5:
-            main_data[md_idx]["GPA"] = float(data)
+            main_data[md_idx]["GPA"] = data
 
         if i == 6:
             main_data[md_idx]["TLastName"] = data
