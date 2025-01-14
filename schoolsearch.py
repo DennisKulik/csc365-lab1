@@ -32,6 +32,10 @@ def main():
     for key in by_grade.keys():
         print(key, by_grade[key])
 
+    bus_52_students = [main_data[i] for i in by_bus[52]]
+    for student in bus_52_students:
+        print(student)
+
 
 def parse_file(file_name, by_st_last, by_t_last, by_bus, by_grade):
     main_data = []
@@ -75,24 +79,24 @@ def add_data(main_data, md_idx, student_info, by_st_last, by_t_last, by_bus, by_
             main_data[md_idx]["StFirstName"] = data
 
         if i == 2:
-            main_data[md_idx]["Grade"] = data
-            if data in by_grade:
-                by_grade[data].append(md_idx)
+            main_data[md_idx]["Grade"] = int(data)
+            if int(data) in by_grade:
+                by_grade[int(data)].append(md_idx)
             else:
-                by_grade[data] = [md_idx]
+                by_grade[int(data)] = [md_idx]
 
         if i == 3:
             main_data[md_idx]["Classroom"] = data
 
         if i == 4:
-            main_data[md_idx]["Bus"] = data
-            if data in by_bus:
-                by_bus[data].append(md_idx)
+            main_data[md_idx]["Bus"] = int(data)
+            if int(data) in by_bus:
+                by_bus[int(data)].append(md_idx)
             else:
-                by_bus[data] = [md_idx]
+                by_bus[int(data)] = [md_idx]
 
         if i == 5:
-            main_data[md_idx]["GPA"] = data
+            main_data[md_idx]["GPA"] = float(data)
 
         if i == 6:
             main_data[md_idx]["TLastName"] = data
