@@ -32,8 +32,26 @@ def main():
     # for key in by_grade.keys():
     #     print(key, by_grade[key])
 
-    test_list = search_st_last("COOKUS", 1, by_st_last, main_data)
-    print("test", test_list)
+    # test_list = search_st_last("COOKUS", 1, by_st_last, main_data)
+    # print("student test", test_list)
+
+    # test_list = search_t_last("FAFARD", by_t_last, main_data)
+    # print("teacher test", test_list)
+
+    test_list = search_grade(6, 0, by_grade, main_data)
+    print("grade test0", test_list)
+
+    test_list = search_grade(6, 1, by_grade, main_data)
+    print("grade test1", test_list)
+
+    test_list = search_grade(6, 2, by_grade, main_data)
+    print("grade test2", test_list)
+
+    test_list = search_grade(6, 3, by_grade, main_data)
+    print("grade test3", test_list)
+
+    # test_list = search_bus(52, by_bus, main_data)
+    # print("test", test_list)
 
 
 # returns list of lists, if bus == 0, nested lists look like
@@ -65,6 +83,115 @@ def search_st_last(lastname, bus, by_st_last, main_data):
                 student["TLastName"],
                 student["TFirstName"]]
             outlist.append(info)
+    return outlist
+
+
+# returns list of lists, nested lists look like
+# [StLastName, StFirstName]
+# if last name does not exist, returns [[None]]
+def search_t_last(lastname, by_t_last, main_data):
+    if lastname in by_t_last:
+        students = [main_data[i] for i in by_t_last[lastname]]
+    else:
+        return [[None]]
+
+    outlist = []
+    for student in students:
+        info = [
+            student["StLastName"],
+            student["StFirstName"],
+            student["Grade"],
+            student["Classroom"],
+            student["TLastName"],
+            student["TFirstName"]]
+        outlist.append(info)
+    return outlist
+
+
+# returns list of lists, if modifier == 0, nested lists look like
+# [StLastName, StFirstName]
+# if modifier == 1 or 2, nested list looks like
+# [StLastName, StFirstName, Bus, GPA, TLastName, TFirstName]
+# if modifier == 3, nested list looks like
+# [avg GPA as a float]
+# if grade does not exist, returns [[None]]
+def search_grade(grade, modifier, by_grade, main_data):
+    if grade in by_grade:
+        students = [main_data[i] for i in by_grade[grade]]
+    else:
+        return [[None]]
+
+    outlist = []
+    if modifier == 0:
+        for student in students:
+            info = [
+                student["StLastName"],
+                student["StFirstName"]]
+            outlist.append(info)
+    elif modifier == 1:
+        highest_student = None
+        highest = 0.0
+
+        for student in students:
+            gpa = float(student["GPA"])
+            if gpa > highest:
+                highest = gpa
+                highest_student = student
+        info = [
+            highest_student["StLastName"],
+            highest_student["StFirstName"],
+            highest_student["Bus"],
+            highest_student["GPA"],
+            highest_student["TLastName"],
+            highest_student["TFirstName"]]
+        outlist.append(info)
+    elif modifier == 2:
+        lowest_student = None
+        lowest = 32768.0
+
+        for student in students:
+            gpa = float(student["GPA"])
+            if gpa < lowest:
+                lowest = gpa
+                lowest_student = student
+        info = [
+            lowest_student["StLastName"],
+            lowest_student["StFirstName"],
+            lowest_student["Bus"],
+            lowest_student["GPA"],
+            lowest_student["TLastName"],
+            lowest_student["TFirstName"]]
+        outlist.append(info)
+    else:
+        sum_nums = 0
+        num_nums = 0
+
+        for student in students:
+            sum_nums += float(student["GPA"])
+            num_nums += 1
+        avg = sum_nums / num_nums
+        outlist.append([avg])
+
+    return outlist
+
+
+# returns list of lists, nested lists look like
+# [StLastName, StFirstName, Grade, Classroom]
+# if bus does not exist, returns [[None]]
+def search_bus(bus, by_bus, main_data):
+    if bus in by_bus:
+        students = [main_data[i] for i in by_bus[bus]]
+    else:
+        return [[None]]
+
+    outlist = []
+    for student in students:
+        info = [
+            student["StLastName"],
+            student["StFirstName"],
+            student["Grade"],
+            student["Classroom"]]
+        outlist.append(info)
     return outlist
 
 
