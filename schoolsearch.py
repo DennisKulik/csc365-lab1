@@ -12,29 +12,60 @@ def main():
     for value in main_data:
         print(value)
 
-    print('')
-    print("st_last_data:")
-    for key in by_st_last.keys():
-        print(key, by_st_last[key])
+    # print('')
+    # print("st_last_data:")
+    # for key in by_st_last.keys():
+    #     print(key, by_st_last[key])
+    #
+    # print('')
+    # print("t_last_data:")
+    # for key in by_t_last.keys():
+    #     print(key, by_t_last[key])
+    #
+    # print('')
+    # print("bus_data:")
+    # for key in by_bus.keys():
+    #     print(key, by_bus[key])
+    #
+    # print('')
+    # print("grade_data:")
+    # for key in by_grade.keys():
+    #     print(key, by_grade[key])
 
-    print('')
-    print("t_last_data:")
-    for key in by_t_last.keys():
-        print(key, by_t_last[key])
+    test_list = search_st_last("COOKUS", 1, by_st_last, main_data)
+    print("test", test_list)
 
-    print('')
-    print("bus_data:")
-    for key in by_bus.keys():
-        print(key, by_bus[key])
 
-    print('')
-    print("grade_data:")
-    for key in by_grade.keys():
-        print(key, by_grade[key])
+# returns list of lists, if bus == 0, nested lists look like
+# [StLastName, StFirstName, Grade, Classroom, TLastName, TFirstName]
+# if bus == 1, nested lists look like
+# [StLastName, StFirstName, Bus]
+# if last name does not exist, returns [[None]]
+def search_st_last(lastname, bus, by_st_last, main_data):
+    if lastname in by_st_last:
+        students = [main_data[i] for i in by_st_last[lastname]]
+    else:
+        return [[None]]
 
-    bus_52_students = [main_data[i] for i in by_bus[52]]
-    for student in bus_52_students:
-        print(student)
+    outlist = []
+    if bus:
+        for student in students:
+            info = [
+                student["StLastName"],
+                student["StFirstName"],
+                student["Bus"]]
+            outlist.append(info)
+    else:
+        for student in students:
+            info = [
+                student["StLastName"],
+                student["StFirstName"],
+                student["Grade"],
+                student["Classroom"],
+                student["TLastName"],
+                student["TFirstName"]]
+            outlist.append(info)
+    return outlist
 
 
 def parse_file(file_name, by_st_last, by_t_last, by_bus, by_grade):
@@ -49,6 +80,7 @@ def parse_file(file_name, by_st_last, by_t_last, by_bus, by_grade):
     return main_data
 
 
+# populates main_data and idx-dicts with student info
 def add_data(main_data, md_idx, student_info, by_st_last, by_t_last, by_bus, by_grade):
     student_dict = {
         "StLastName": None,
@@ -61,7 +93,6 @@ def add_data(main_data, md_idx, student_info, by_st_last, by_t_last, by_bus, by_
         "TFirstName": None}
     main_data.append(student_dict)
 
-    # populates main_data and idx-dicts with student info
     for i, data in enumerate(student_info):
 
         # determines which field to populate using i
@@ -112,5 +143,3 @@ def add_data(main_data, md_idx, student_info, by_st_last, by_t_last, by_bus, by_
 
 if __name__ == "__main__":
     main()
-
-
