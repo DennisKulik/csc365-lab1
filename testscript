@@ -1,0 +1,145 @@
+// CSC 365
+// Lab 1-a test suite
+
+// TC-1
+// Tests Requirements R3, R4
+// short form command name, existing student
+// expected output: COOKUS, XUAN, 3, 107, FAFARD, ROCIO
+S: COOKUS
+
+// TC-2
+// Tests Requirements R3, R4
+// short form command name, non-existing student
+// expected output: No students found for the specified last name.
+S: NEMO
+
+// TC-3
+// Tests Requirements R3, R5
+// short form command name, existing student with bus flag
+// expected output: COOKUS, XUAN, 52
+S: COOKUS B
+
+// TC-4
+// Tests Requirements R3, R7
+// teacher search, existing teacher
+// expected output:
+// LIBRANDI, TODD
+// HAVIR, BOBBIE
+// SARAO, DIEDRA
+// VANCOTT, MIKE
+// WICINSKY, TERESE
+// KOZOLA, BUSTER
+// MULLINGS, LEIGHANN
+// BUSSMANN, BILLY
+// BERBES, DICK
+// MULGREW, RANDELL
+// TOWLEY, LANE
+T: HAMER
+
+// TC-5
+// Tests Requirements R3, R7
+// teacher search, non-existing teacher
+// expected output: No students found for the specified teacher last name.
+T: MIGLER
+
+// TC-6
+// Tests Requirements R3, R8
+// bus search, existing bus route
+// expected output:
+// COOKUS, XUAN, 3, 107
+// ELHADDAD, SHANTE, 3, 107
+// IMMERMAN, DEVIN, 4, 105
+// OBREIN, STAN, 6, 111
+// CORONADO, DIMPLE, 6, 102
+// SARAO, DIEDRA, 2, 108
+// EARLY, TORY, 3, 107
+// KEMERER, ROSETTA, 6, 102
+B: 52
+
+// TC-7
+// Tests Requirements R3, R8
+// bus search, non-existing bus route
+// expected output: No students found for the specified bus route.
+B: 999
+
+// TC-8
+// Tests Requirements R3, R9
+// grade search, existing grade
+// expected output:
+// SAELEE, DANILO
+// GARTH, JOHN
+G: 1
+
+// TC-9
+// Tests Requirements R3, R9
+// grade search, non-existing grade
+// expected output: No students found for the specified grade.
+G: 22
+
+// TC-10
+// Tests Requirements R3, R10
+// highest GPA in grade search
+// expected output: LAMKIN, TAMA, 55, 3.23, NISTENDIRK, NANCY
+G: 6 H
+
+// TC-11
+// Tests Requirements R3, R10
+// lowest GPA in grade search
+// expected output: KRAKE, VALENTIN, 56, 2.78, GAMBREL, JAE
+G: 6 L
+
+// TC-12
+// Tests Requirements R3, R11
+// average GPA in grade search
+// expected output: 2.98
+A: 6
+
+// TC-13
+// Tests Requirements R3, R12
+// school info (student count per grade)
+// expected output:
+// Grade 0: 0
+// Grade 1: 2
+// Grade 2: 13
+// Grade 3: 9
+// Grade 4: 15
+// Grade 5: 0
+// Grade 6: 21
+I
+
+// TC-14
+// Tests Requirements E1
+// invalid input command (too many arguments)
+// expected output: Too many arguments
+S: COOKUS B EXTRA
+
+// TC-15
+// Tests Requirements E1
+// invalid input command (missing argument for grade search)
+// expected output: Check Arguments
+G:
+
+// TC-16
+// Tests Requirements E1
+// invalid input command (non-digit grade input)
+// expected output: Check Grade Argument
+G: ABC
+
+// TC-17
+// Tests Requirement E1
+// No arguments provided (blank command)
+// Expected output: Input Command (or type 'Q' to quit):
+<empty input>
+
+// TC-18
+// Tests Requirement E1
+// Unknown or invalid command provided
+// Expected output: Input Command (or type 'Q' to quit):
+FAKE: COMMAND
+
+// TC-19
+// Tests Requirements R3, R13
+// quit command
+// expected output: program terminates
+Q
+

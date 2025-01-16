@@ -1,6 +1,18 @@
+import sys
 
+INPUT_MAX = 3
+BUS_FLAG = 1
+NO_BUS_FLAG = 0
+NO_GRADE_FLAG = 0
+HIGH_GPA_FLAG = 1
+LOW_GPA_FLAG = 2
+AVG_GPA_FLAG = 3
+NUMBER_OF_GRADES = 7
+ONE_ARG = 1
+TWO_ARGS = 2
+THREE_ARGS = 3
 def main():
-    file = "students_a.txt"
+    file = "students.txt"
     by_st_last = {}
     by_t_last = {}
     by_bus = {}
@@ -8,15 +20,163 @@ def main():
 
     main_data = parse_file(file, by_st_last, by_t_last, by_bus, by_grade)
 
-    print("main_data:")
-    for value in main_data:
-        print(value)
+    # Check if command-line arguments are passed
+    if len(sys.argv) > ONE_ARG:
+        input_list = sys.argv[1:]  # ignore sys.argv[0]
+        handle_command(input_list, main_data, by_st_last, by_t_last, by_bus, by_grade)
+    else:
+        # Otherwise, enter interactive mode
+        while True:
+            user_input = input("Input Command (or type 'Q' to quit): ")
+            input_list = user_input.split()
 
+            input_length = len(input_list)
+
+            if input_length > INPUT_MAX:
+                print("Too many arguments")
+                continue
+            elif input_length == 0:
+                continue
+            if input_list[0] == "Q":
+                print("Goodbye!")
+                return
+
+            handle_command(main_data, by_st_last, by_t_last, by_bus, by_grade, input_list)
+
+
+def handle_command(main_data, by_st_last, by_t_last, by_bus, by_grade, input_list):
+    first_arg = input_list[0]
+    if first_arg == "S:":
+        handle_student_lastname(main_data, by_st_last, input_list)
+    elif first_arg == "T:":
+        handle_teacher_lastname(main_data, by_t_last, input_list)
+    elif first_arg == "B:":
+        handle_bus(main_data, by_bus, input_list)
+    elif first_arg == "G:":
+        handle_grade(main_data, by_grade, input_list)
+    elif first_arg == "A:":
+        handle_average(main_data, by_grade, input_list)
+    elif first_arg == "I":
+        handle_info(main_data, by_grade)
+
+
+def handle_info(main_data, by_grade):
+    for i in range(NUMBER_OF_GRADES):
+        students = search_grade(i, NO_GRADE_FLAG, by_grade, main_data)
+
+        # Check if students is of type [[None]] (has zero students)
+        if students == [[None]]:
+            print(f"Grade {i}: 0")
+        else:
+            student_count = len(students)
+            print(f"Grade {i}: {student_count}")
+
+
+def handle_average(main_data, by_grade, input_list):
+    input_length = len(input_list)
+    if input_length == TWO_ARGS:
+        grade = input_list[1]
+        if grade.isdigit():
+            data = search_grade(int(grade), AVG_GPA_FLAG, by_grade, main_data)
+            if data != [[None]]:
+                for student in data:
+                    print(", ".join(str(x) for x in student))
+            else:
+                print("No students found for the specified grade.")
+    else:
+        print("Check Arguments")
+
+
+def handle_grade(main_data, by_grade, input_list):
+    input_length = len(input_list)
+    if (input_length == 1) or (input_length > THREE_ARGS):
+        print("Check Arguments")
+        return
+    grade = input_list[1]
+    if grade.isdigit():
+        data = ""
+        if input_length == TWO_ARGS:
+            data = search_grade(int(grade), NO_GRADE_FLAG, by_grade, main_data)
+        elif input_length == THREE_ARGS:
+            flag = input_list[2]
+            if flag == "H":
+                data = search_grade(int(grade), HIGH_GPA_FLAG, by_grade, main_data)
+            elif flag == "L":
+                data = search_grade(int(grade), LOW_GPA_FLAG, by_grade, main_data)
+            else:
+                print("Check Arguments")
+                return
+        if data != [[None]]:
+            for student in data:
+                print(", ".join(str(x) for x in student))
+        else:
+            print("No students found for the specified grade.")
+    else:
+        print("Check Grade Argument")
+
+
+def handle_bus(main_data, by_bus, input_list):
+    input_length = len(input_list)
+    if input_length == TWO_ARGS:
+        bus_route = input_list[1]
+        if bus_route.isdigit():
+            data = search_bus(int(bus_route), by_bus, main_data)
+            if data != [[None]]:
+                for student in data:
+                    print(", ".join(str(x) for x in student))
+            else:
+                print("No students found for the specified bus route.")
+        else:
+            print("Check Bus Route Argument")
+    else:
+        print("Check Arguments")
+
+
+def handle_teacher_lastname(main_data, by_t_last, input_list):
+    input_length = len(input_list)
+    if input_length == TWO_ARGS:
+        data = search_t_last(input_list[1], by_t_last, main_data)
+        if data != [[None]]:
+            for student in data:
+                print(", ".join(str(x) for x in student))
+        else:
+            print("No students found for the specified teacher last name.")
+    else:
+        print("Check Arguments")
+
+
+def handle_student_lastname(main_data, by_st_last, input_list):
+    input_length = len(input_list)
+    data = ""
+
+    if input_length == TWO_ARGS:
+        data = search_st_last(input_list[1], NO_BUS_FLAG, by_st_last, main_data)
+    elif input_length == THREE_ARGS:
+        if input_list[2] == "B":
+            data = search_st_last(input_list[1], BUS_FLAG, by_st_last, main_data)
+        else:
+            print("Check Arguments")
+            return
+    else:
+        print("Check Arguments")
+        return
+
+    if data != [[None]]:
+        for student in data:
+            print(", ".join(str(x) for x in student))
+    else:
+        print("No students found for the specified last name.")
+
+    #
+    # print("main_data:")
+    # for value in main_data:
+    #     print(value)
+    #
     # print('')
     # print("st_last_data:")
     # for key in by_st_last.keys():
     #     print(key, by_st_last[key])
-    #
+
     # print('')
     # print("t_last_data:")
     # for key in by_t_last.keys():
@@ -31,24 +191,24 @@ def main():
     # print("grade_data:")
     # for key in by_grade.keys():
     #     print(key, by_grade[key])
-
+    #
     # test_list = search_st_last("COOKUS", 1, by_st_last, main_data)
     # print("student test", test_list)
 
     # test_list = search_t_last("FAFARD", by_t_last, main_data)
     # print("teacher test", test_list)
 
-    test_list = search_grade(6, 0, by_grade, main_data)
-    print("grade test0", test_list)
-
-    test_list = search_grade(6, 1, by_grade, main_data)
-    print("grade test1", test_list)
-
-    test_list = search_grade(6, 2, by_grade, main_data)
-    print("grade test2", test_list)
-
-    test_list = search_grade(6, 3, by_grade, main_data)
-    print("grade test3", test_list)
+    # test_list = search_grade(6, 0, by_grade, main_data)
+    # print("grade test0", test_list)
+    #
+    # test_list = search_grade(6, 1, by_grade, main_data)
+    # print("grade test1", test_list)
+    #
+    # test_list = search_grade(6, 2, by_grade, main_data)
+    # print("grade test2", test_list)
+    #
+    # test_list = search_grade(6, 3, by_grade, main_data)
+    # print("grade test3", test_list)
 
     # test_list = search_bus(52, by_bus, main_data)
     # print("test", test_list)
@@ -100,10 +260,11 @@ def search_t_last(lastname, by_t_last, main_data):
         info = [
             student["StLastName"],
             student["StFirstName"],
-            student["Grade"],
-            student["Classroom"],
-            student["TLastName"],
-            student["TFirstName"]]
+            # student["Grade"],
+            # student["Classroom"],
+            # student["TLastName"],
+            # student["TFirstName"]
+            ]
         outlist.append(info)
     return outlist
 
@@ -170,6 +331,7 @@ def search_grade(grade, modifier, by_grade, main_data):
             sum_nums += float(student["GPA"])
             num_nums += 1
         avg = sum_nums / num_nums
+        avg = round(avg, 2)
         outlist.append([avg])
 
     return outlist

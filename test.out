@@ -1,0 +1,62 @@
+Input Command (or type 'Q' to quit): S: COOKUS
+COOKUS, XUAN, 3, 107, FAFARD, ROCIO
+Input Command (or type 'Q' to quit): S: NEMO
+No students found for the specified last name.
+Input Command (or type 'Q' to quit): S: COOKUS B
+COOKUS, XUAN, 52
+Input Command (or type 'Q' to quit): T: HAMER
+LIBRANDI, TODD
+HAVIR, BOBBIE
+SARAO, DIEDRA
+VANCOTT, MIKE
+WICINSKY, TERESE
+KOZOLA, BUSTER
+MULLINGS, LEIGHANN
+BUSSMANN, BILLY
+BERBES, DICK
+MULGREW, RANDELL
+TOWLEY, LANE
+Input Command (or type 'Q' to quit): T: MIGLER
+No students found for the specified teacher last name.
+Input Command (or type 'Q' to quit): B: 52
+COOKUS, XUAN, 3, 107
+ELHADDAD, SHANTE, 3, 107
+IMMERMAN, DEVIN, 4, 105
+OBREIN, STAN, 6, 111
+CORONADO, DIMPLE, 6, 102
+SARAO, DIEDRA, 2, 108
+EARLY, TORY, 3, 107
+KEMERER, ROSETTA, 6, 102
+Input Command (or type 'Q' to quit): B: 999
+No students found for the specified bus route.
+Input Command (or type 'Q' to quit): G: 1
+SAELEE, DANILO
+GARTH, JOHN
+Input Command (or type 'Q' to quit): G: 22
+No students found for the specified grade.
+Input Command (or type 'Q' to quit): G: 6 H
+LAMKIN, TAMA, 55, 3.23, NISTENDIRK, NANCY
+Input Command (or type 'Q' to quit): G: 6 L
+KRAKE, VALENTIN, 56, 2.78, GAMBREL, JAE
+Input Command (or type 'Q' to quit): A: 6
+2.98
+Input Command (or type 'Q' to quit): I
+Grade 0: 0
+Grade 1: 2
+Grade 2: 13
+Grade 3: 9
+Grade 4: 15
+Grade 5: 0
+Grade 6: 21
+Input Command (or type 'Q' to quit): S: COOKUS B EXTRA
+Too many arguments
+Input Command (or type 'Q' to quit): G:
+Check Arguments
+Input Command (or type 'Q' to quit): G: ABC
+Check Grade Argument
+Input Command (or type 'Q' to quit):
+Input Command (or type 'Q' to quit): FAKE: COMMAND
+Input Command (or type 'Q' to quit): Q
+Goodbye!
+
+Process finished with exit code 0
